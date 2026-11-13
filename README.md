@@ -22,7 +22,7 @@ app/
   main.py        entry point
   agent/         agent logic (planned)
   tools/         tools the agent can use (planned)
-tests/           tests (planned)
+tests/           unit tests
 .env.example     template for environment variables
 ```
 
@@ -36,8 +36,16 @@ cd AgentForge
 python app/main.py
 ```
 
+## Run the tests
+
+There is one small test that checks the startup messages. It uses Python's built-in `unittest`, so nothing needs installing:
+
+```bash
+python -m unittest discover -s tests -t .
+```
+
 ## Roadmap
 
 - Connect a local AI model as the agent's brain
 - Give the agent its first tools
-- Add tests
+- Add more tests as features are built
