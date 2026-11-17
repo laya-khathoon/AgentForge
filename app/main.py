@@ -6,7 +6,7 @@ import socket
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from app.agent.tool_chat import TOOL_PROMPT
+from app.agent.tool_chat import TOOL_PROMPT, answer_with_tools
 
 CHAT_URL = "http://127.0.0.1:11434/api/chat"
 DEFAULT_MODEL = "llama3.2:3b"
@@ -73,7 +73,7 @@ def run_chat(model, input_fn=input, output_fn=print, chat_fn=chat):
             continue
         pending = history + [{"role": "user", "content": text}]
         try:
-            reply = chat_fn(pending, model=model)
+            reply = answer_with_tools(chat_fn, pending, model)
         except ChatError as exc:
             output_fn(f"Error: {exc}")
             continue
