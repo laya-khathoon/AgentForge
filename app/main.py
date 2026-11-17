@@ -7,6 +7,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from app.agent.tool_chat import TOOL_PROMPT, answer_with_tools
+from app.tools.registry import TOOLS
 
 CHAT_URL = "http://127.0.0.1:11434/api/chat"
 DEFAULT_MODEL = "llama3.2:3b"
@@ -53,7 +54,7 @@ def chat(messages, model=DEFAULT_MODEL):
 def run_chat(model, input_fn=input, output_fn=print, chat_fn=chat):
     """Interactive session; history lives in memory only and is size-limited."""
     output_fn("AgentForge local chat")
-    output_fn(f"Model: {model}. Commands: /reset, /exit")
+    output_fn(f"Model: {model}. Commands: /tools, /reset, /exit")
     output_fn("One tool: get_current_time. No file access or autonomous actions yet.")
     history = [SYSTEM_MESSAGE.copy()]
     while True:
@@ -67,6 +68,9 @@ def run_chat(model, input_fn=input, output_fn=print, chat_fn=chat):
         if text.lower() in ("/exit", "/quit"):
             output_fn("Goodbye.")
             return
+        if text.lower() == "/tools":
+            output_fn("Tools: " + ", ".join(sorted(TOOLS)))
+            continue
         if text.lower() == "/reset":
             history = [SYSTEM_MESSAGE.copy()]
             output_fn("Conversation cleared.")
