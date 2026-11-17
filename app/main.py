@@ -6,6 +6,7 @@ import socket
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from app.agent.tool_chat import TOOL_PROMPT
 
 CHAT_URL = "http://127.0.0.1:11434/api/chat"
 DEFAULT_MODEL = "llama3.2:3b"
@@ -15,6 +16,7 @@ SYSTEM_MESSAGE = {
     "content": (
         "You are AgentForge, a helpful local chat assistant. Be clear and honest. "
         "You cannot run commands, browse, or read files. Do not claim you did."
+         + TOOL_PROMPT
     ),
 }
 
@@ -52,7 +54,7 @@ def run_chat(model, input_fn=input, output_fn=print, chat_fn=chat):
     """Interactive session; history lives in memory only and is size-limited."""
     output_fn("AgentForge local chat")
     output_fn(f"Model: {model}. Commands: /reset, /exit")
-    output_fn("Chat only: no tools, file access, or autonomous actions yet.")
+    output_fn("One tool: get_current_time. No file access or autonomous actions yet.")
     history = [SYSTEM_MESSAGE.copy()]
     while True:
         try:
