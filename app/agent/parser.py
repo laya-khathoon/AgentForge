@@ -1,10 +1,16 @@
-"""Detect when the model asks for a tool. The only accepted form is: TOOL: name"""
+"""Detect when the model asks for a tool. The accepted form is: TOOL: name [argument]"""
 import re
 
-TOOL_REQUEST = re.compile(r"^\s*TOOL:\s*([a-z_]+)\s*$")
+TOOL_REQUEST = re.compile(r"^\s*TOOL:\s*([a-z_]+)(?:[ \t]+(\S.*?))?\s*$")
 
 
 def parse_tool_request(reply):
-    """Return the tool name if the whole reply is a tool request, else None."""
+    """Return (tool_name, argument) if the whole reply is a tool request, else None.
+
+    The argument is the text after the tool name (for example the expression in
+    "TOOL: calculate 2 + 2"), or None when the tool needs no argument.
+    """
     match = TOOL_REQUEST.match(reply or "")
-    return match.group(1) if match else None
+    if not match:
+        return None
+    return match.group(1), match.group(2)
