@@ -1,9 +1,10 @@
 # AgentForge
 
-A local-first AI assistant built in Python. **Status: terminal-chat milestone.**
-It can send a message to a model running in Ollama on your computer and keep a
-short conversation in memory. It is not an autonomous agent yet: it cannot
-browse, run commands, or read files. It has one tool: the current time.
+A local-first AI assistant built in Python. **Status: tool-using chat milestone.**
+It sends messages to a model running in Ollama on your computer, keeps a short
+conversation in memory, and can use three safe tools: the current time, a
+calculator, and a read-only project file reader. It is not an autonomous agent
+yet: it cannot browse, run commands, or write files.
 
 ## What you need
 
@@ -55,6 +56,28 @@ python -m app.main --model your-installed-model
 The shell environment variable `OLLAMA_MODEL` can also set the model name.
 This version does not load `.env` files. No credentials belong in the code.
 
+## Tools
+
+A tool is a plain Python function listed in `app/tools/registry.py`. Only listed
+names can run. The system prompt tells the model to ask for a tool by replying
+`TOOL: tool_name argument`, where the argument is optional. `app/agent/parser.py`
+checks the reply, `app/agent/tool_chat.py` runs the tool and gives the result
+back to the model, and at most one tool call happens per answer.
+
+Current tools:
+
+- `get_current_time` - no argument. Tells the current local date and time.
+- `calculate` - argument is one arithmetic expression, for example
+  `TOOL: calculate 2 + 3 * 4`. Safe by construction: no `eval()`, only numbers
+  and `+ - * / // % **` with parentheses, and oversized operands are refused.
+- `read_project_file` - argument is a path relative to the project folder, for
+  example `TOOL: read_project_file README.md`. Read-only: it cannot write or
+  delete, refuses paths outside the project, hidden files (`.env`, `.git`) and
+  non-text files, and truncates files larger than 20 KB.
+
+Try them: ask "what time is it?", "what is 128 times 46?", or
+"summarize the README file".
+
 ## If something goes wrong
 
 - **Cannot reach Ollama:** open the Ollama app. If it is not serving locally,
@@ -65,6 +88,8 @@ This version does not load `.env` files. No credentials belong in the code.
 - **Slow or timed-out reply:** loading a model can take time. The request times
   out after 120 seconds. Try a smaller installed model if needed.
 - **Wrong answer:** local models can make mistakes. Check important claims.
+- **The model does not use a tool:** small local models sometimes ignore the
+  tool instructions. Rephrase the question, or try a larger installed model.
 
 ## Privacy and limits
 
@@ -74,8 +99,8 @@ running; `/reset` or quitting clears them. Ollama is a separate program with
 its own settings and logs, so do not treat this as a guarantee about all
 software on your computer. Replies are displayed as text, never executed.
 
-There is no persistent memory, file access, agent loop, web interface, or
-deployment yet.
+There is no persistent memory, agent loop, web interface, or deployment yet.
+The file tool reads only inside this project folder and can never write.
 
 ## Run the tests
 
@@ -87,32 +112,26 @@ python -m unittest discover -s tests -t . -v
 
 The tests use mock responses and do not need Ollama or a model download. They
 cover the HTTP request format, reply parsing, server failures, conversation
-history, reset/exit behavior, and the model option. Passing these tests does
-not prove a real model is installed or working on your laptop.
+history, reset/exit behavior, the model option, the tool parser, the
+calculator, the read-only file tool, and the tool-using answer loop. Passing
+these tests does not prove a real model is installed or working on your laptop.
 
 ## Project structure
 
 ```text
 app/main.py        terminal loop and local Ollama client
 app/agent/         parser and tool-using answer loop
-app/tools/         tools: clock.py and registry.py
+app/tools/         clock.py, calculator.py, file_reader.py and registry.py
 tests/             offline unit tests
 .env.example       reserved template; not loaded by this version
 requirements.txt   empty: this milestone uses only Python's standard library
 ```
 
-## Tools
-
-A tool is a plain Python function listed in `app/tools/registry.py`. Only listed
-names can run. The system prompt tells the model to ask for a tool by replying
-exactly `TOOL: get_current_time`. `app/agent/parser.py` checks the reply,
-`app/agent/tool_chat.py` runs the tool and gives the result back to the model,
-and at most one tool call happens per answer. Try it: ask "what time is it?".
-
 ## Next milestone
 
-Add a safe read-only file tool with explicit path restrictions, and tests.
-Build the full action loop after that.
+Let one answer chain a small number of tool calls (with a hard cap), then add a
+fourth tool the user must approve before it runs. Build the full action loop
+after that. See ROADMAP.md for the full seven-phase plan.
 
 ## References
 
