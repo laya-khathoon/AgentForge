@@ -16,7 +16,8 @@ SYSTEM_MESSAGE = {
     "role": "system",
     "content": (
         "You are AgentForge, a helpful local chat assistant. Be clear and honest. "
-        "You cannot run commands, browse, or read files. Do not claim you did."
+        "You cannot run commands, browse the web, or write files. Do not claim you did. "
+        "You can only read project files through your read_project_file tool. "
          + TOOL_PROMPT
     ),
 }
@@ -55,7 +56,8 @@ def run_chat(model, input_fn=input, output_fn=print, chat_fn=chat):
     """Interactive session; history lives in memory only and is size-limited."""
     output_fn("AgentForge local chat")
     output_fn(f"Model: {model}. Commands: /tools, /reset, /exit")
-    output_fn("One tool: get_current_time. No file access or autonomous actions yet.")
+    output_fn("Tools: " + ", ".join(sorted(TOOLS)) +
+              ". The file tool is read-only and stays inside the project folder.")
     history = [SYSTEM_MESSAGE.copy()]
     while True:
         try:
