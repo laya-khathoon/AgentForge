@@ -11,7 +11,10 @@ class ToolsCommandTests(unittest.TestCase):
         responder = Mock()
         run_chat("m", input_fn=Mock(side_effect=["/tools", "/exit"]),
                  output_fn=output.append, chat_fn=responder)
-        self.assertIn("Tools: get_current_time", output)
+        tools_lines = [line for line in output if line.startswith("Tools: ")]
+        self.assertTrue(tools_lines, "expected a Tools: line in the output")
+        for name in ("calculate", "get_current_time", "read_project_file"):
+            self.assertIn(name, tools_lines[0])
         responder.assert_not_called()
 
 
