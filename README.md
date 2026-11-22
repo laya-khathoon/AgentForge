@@ -62,7 +62,9 @@ A tool is a plain Python function listed in `app/tools/registry.py`. Only listed
 names can run. The system prompt tells the model to ask for a tool by replying
 `TOOL: tool_name argument`, where the argument is optional. `app/agent/parser.py`
 checks the reply, `app/agent/tool_chat.py` runs the tool and gives the result
-back to the model, and at most one tool call happens per answer.
+back to the model. One answer can chain up to 3 tool calls, so the model can
+combine tools (for example read a file, then calculate with its contents); at
+the cap it must answer with the results it already has.
 
 Current tools:
 
