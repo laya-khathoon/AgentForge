@@ -26,7 +26,7 @@ class CalculatorTests(unittest.TestCase):
                 self.assertIn("Cannot calculate", calculate(bad))
 
     def test_resource_limits_and_nonfinite_values(self):
-        for bad in ("9 ** 999999999", "2 ** 101", "1e309 + 1", "(-1) ** 0.5",
+        for bad in ("9 ** 999999999", "2 ** 101", "1e309 + 1", "1e309", "True", "(-1) ** 0.5",
                     "9" * 501, "(" * 300 + "1" + ")" * 300, 42):
             with self.subTest(bad=bad):
                 self.assertIn("Cannot calculate", calculate(bad))
