@@ -31,7 +31,11 @@ def _count_digits(value):
 def _evaluate(node):
     if isinstance(node, ast.Expression):
         return _evaluate(node.body)
-    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+    if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+        if isinstance(node.value, float) and not math.isfinite(node.value):
+            raise ValueError("numbers must be finite")
+        if _count_digits(node.value) > _MAX_DIGITS:
+            raise ValueError("numbers are too large")
         return node.value
     if isinstance(node, ast.BinOp) and type(node.op) in _OPERATORS:
         left = _evaluate(node.left)
