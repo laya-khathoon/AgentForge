@@ -2,6 +2,7 @@
 from app.tools.calculator import calculate
 from app.tools.clock import get_current_time
 from app.tools.file_reader import FileReadError, read_project_file
+from app.tools.word_count import word_count
 
 
 class ToolError(Exception):
@@ -16,6 +17,7 @@ TOOLS = {
     "get_current_time": _clock,
     "calculate": calculate,
     "read_project_file": read_project_file,
+    "word_count": word_count,
 }
 
 
