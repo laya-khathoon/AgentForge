@@ -76,9 +76,12 @@ Current tools:
   example `TOOL: read_project_file README.md`. Read-only: it cannot write or
   delete, refuses paths outside the project, hidden files (`.env`, `.git`) and
   non-text files, and truncates files larger than 20 KB.
+- `word_count` - argument is some text, for example
+  `TOOL: word_count good morning everyone`. Replies with the number of words,
+  lines and characters; refuses empty input and text over 20,000 characters.
 
 Try them: ask "what time is it?", "what is 128 times 46?", or
-"summarize the README file".
+"summarize the README file", or "how many words are in this sentence?".
 
 ## If something goes wrong
 
