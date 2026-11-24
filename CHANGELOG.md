@@ -2,6 +2,12 @@
 
 Milestones of the build, newest first. The roadmap lives in ROADMAP.md.
 
+## 2026-11-24 - Word count tool
+
+A fourth safe tool, `word_count`: counts words, lines and characters in a
+text. It refuses empty input and text over 20,000 characters. Registered,
+described to the model and covered by offline tests.
+
 ## 2026-11-22 - Chained tool calls
 
 One answer can now chain up to 3 tool calls (`MAX_TOOL_CALLS` in
