@@ -9,6 +9,10 @@ class RegistryTests(unittest.TestCase):
         self.assertIn("get_current_time", TOOLS)
         self.assertIsInstance(run_tool("get_current_time"), str)
 
+    def test_word_count_is_registered_and_runs(self):
+        self.assertIn("word_count", TOOLS)
+        self.assertEqual(run_tool("word_count", "one two"), "2 words, 1 lines, 7 characters")
+
     def test_unknown_tool_is_refused(self):
         with self.assertRaises(ToolError):
             run_tool("delete_everything")
