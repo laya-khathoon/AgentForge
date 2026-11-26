@@ -79,9 +79,13 @@ Current tools:
 - `word_count` - argument is some text, for example
   `TOOL: word_count good morning everyone`. Replies with the number of words,
   lines and characters; refuses empty input and text over 20,000 characters.
+- `unit_convert` - argument is `<number> <unit> to <unit>`, for example
+  `TOOL: unit_convert 5 km to miles`. Converts length (mm, cm, m, km, inch, ft,
+  mile), weight (mg, g, kg, oz, lb) and temperature (c, f, k). It uses fixed
+  tables, so nothing is evaluated, and it refuses unknown units and mixed kinds.
 
 Try them: ask "what time is it?", "what is 128 times 46?", or
-"summarize the README file", or "how many words are in this sentence?".
+"summarize the README file", "how many words are in this sentence?", or "convert 5 km to miles".
 
 ## If something goes wrong
 
