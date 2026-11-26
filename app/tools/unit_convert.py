@@ -14,6 +14,14 @@ _LENGTH_IN_METRES = {
     "mile": 1609.344,
 }
 
+_WEIGHT_IN_GRAMS = {
+    "mg": 0.001,
+    "g": 1.0,
+    "kg": 1000.0,
+    "oz": 28.349523125,
+    "lb": 453.59237,
+}
+
 
 def _convert_with_table(value, source, target, table):
     return value * table[source] / table[target]
