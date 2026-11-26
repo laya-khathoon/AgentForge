@@ -2,6 +2,12 @@
 
 Milestones of the build, newest first. The roadmap lives in ROADMAP.md.
 
+## 2026-11-26 - Unit convert tool
+
+A fifth safe tool, `unit_convert`: converts length, weight and temperature
+with fixed lookup tables. Offline tests cover the maths, the error messages,
+the registry and the chat loop.
+
 ## 2026-11-24 - Word count tool
 
 A fourth safe tool, `word_count`: counts words, lines and characters in a
