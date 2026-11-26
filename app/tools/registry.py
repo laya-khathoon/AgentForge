@@ -2,6 +2,7 @@
 from app.tools.calculator import calculate
 from app.tools.clock import get_current_time
 from app.tools.file_reader import FileReadError, read_project_file
+from app.tools.unit_convert import unit_convert
 from app.tools.word_count import word_count
 
 
@@ -18,6 +19,7 @@ TOOLS = {
     "calculate": calculate,
     "read_project_file": read_project_file,
     "word_count": word_count,
+    "unit_convert": unit_convert,
 }
 
 
