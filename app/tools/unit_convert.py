@@ -25,3 +25,18 @@ _WEIGHT_IN_GRAMS = {
 
 def _convert_with_table(value, source, target, table):
     return value * table[source] / table[target]
+
+
+def _convert_temperature(value, source, target):
+    """Convert between c, f and k by going through celsius."""
+    if source == "c":
+        celsius = value
+    elif source == "f":
+        celsius = (value - 32) * 5 / 9
+    else:
+        celsius = value - 273.15
+    if target == "c":
+        return celsius
+    if target == "f":
+        return celsius * 9 / 5 + 32
+    return celsius + 273.15
