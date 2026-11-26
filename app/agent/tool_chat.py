@@ -5,11 +5,12 @@ from app.tools.registry import ToolError, run_tool
 MAX_TOOL_CALLS = 3
 
 TOOL_PROMPT = (
-    "You have four tools. "
+    "You have five tools. "
     "get_current_time: no argument, tells the current local date and time. "
     "calculate: argument is one arithmetic expression, e.g. TOOL: calculate 2 + 3 * 4. "
     "read_project_file: argument is a path inside this project, e.g. TOOL: read_project_file README.md . "
     "word_count: argument is some text, e.g. TOOL: word_count good morning everyone. "
+    "unit_convert: argument is a number, a unit, 'to' and a unit, e.g. TOOL: unit_convert 5 km to miles. "
     "To use a tool, reply with exactly: TOOL: tool_name argument . Otherwise answer normally."
 )
 
