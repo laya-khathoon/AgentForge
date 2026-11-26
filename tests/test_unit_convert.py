@@ -21,6 +21,17 @@ class UnitConvertTests(unittest.TestCase):
     def test_miles_to_km(self):
         self.assertEqual(unit_convert("1 mile to km"), "1 mile = 1.6093 km")
 
+    def test_bad_input_gives_a_clear_message(self):
+        self.assertTrue(unit_convert("").startswith("Nothing to convert"))
+        self.assertTrue(unit_convert(None).startswith("Nothing to convert"))
+        self.assertIn("not a number", unit_convert("abc km to m"))
+        self.assertIn("unknown unit", unit_convert("5 parsec to m"))
+        self.assertIn("different things", unit_convert("5 kg to km"))
+        self.assertIn("use the form", unit_convert("5 km miles"))
+        self.assertIn("too long", unit_convert("5 km to m " + "x" * 200))
+        self.assertIn("finite", unit_convert("inf km to m"))
+        self.assertIn("give text", unit_convert(5))
+
 
 if __name__ == "__main__":
     unittest.main()
