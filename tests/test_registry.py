@@ -17,6 +17,10 @@ class RegistryTests(unittest.TestCase):
         self.assertIn("unit_convert", TOOLS)
         self.assertEqual(run_tool("unit_convert", "1 km to m"), "1 km = 1000 m")
 
+    def test_date_diff_is_registered_and_runs(self):
+        self.assertIn("date_diff", TOOLS)
+        self.assertIn("1 day later", run_tool("date_diff", "2026-01-01 to 2026-01-02"))
+
     def test_unknown_tool_is_refused(self):
         with self.assertRaises(ToolError):
             run_tool("delete_everything")
