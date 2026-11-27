@@ -11,3 +11,8 @@ _MAX_CHARS = 100
 def _parse_date(text):
     """Return a date for YYYY-MM-DD text, or raise ValueError."""
     return date.fromisoformat(text.strip())
+
+
+def _days_between(first, second):
+    """Signed number of days from first to second."""
+    return (second - first).days
