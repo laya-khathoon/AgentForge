@@ -29,3 +29,27 @@ def _describe(days):
     if rest:
         parts.append(f"{rest} day" + ("" if rest == 1 else "s"))
     return f"{size} {label} ({' '.join(parts)})"
+
+
+def date_diff(argument=None):
+    """Return how many days lie between `<date> to <date>` as text."""
+    if argument is not None and not isinstance(argument, str):
+        return "Cannot compare: give text like '2026-11-27 to 2026-12-25'"
+    if not argument or not argument.strip():
+        return "Nothing to compare. Give something like: 2026-11-27 to 2026-12-25"
+    if len(argument) > _MAX_CHARS:
+        return f"Input too long (limit {_MAX_CHARS} characters)"
+    pieces = argument.lower().split(" to ")
+    if len(pieces) != 2:
+        return "Please use the form: 2026-11-27 to 2026-12-25"
+    try:
+        first = _parse_date(pieces[0])
+        second = _parse_date(pieces[1])
+    except ValueError:
+        return "Dates must be real calendar dates written as YYYY-MM-DD"
+    days = _days_between(first, second)
+    if days == 0:
+        return f"{first.isoformat()} and {second.isoformat()} are the same day"
+    direction = "later" if days > 0 else "earlier"
+    return (f"{second.isoformat()} is {_describe(days)} {direction} "
+            f"than {first.isoformat()}")
