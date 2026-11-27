@@ -18,7 +18,7 @@ Keep the last ten turns in memory so follow-up questions work.
 
 The model asks for a tool with `TOOL: tool_name argument`; only names in the
 registry can run. Done: `get_current_time`, `calculate`, `read_project_file`
-(read-only, project folder only), `word_count`, `unit_convert`. One answer can now chain up to 3 tool calls
+(read-only, project folder only), `word_count`, `unit_convert`, `date_diff`. One answer can now chain up to 3 tool calls
 (`MAX_TOOL_CALLS` in `app/agent/tool_chat.py`); after the cap the model must
 answer with the results it has. Next: Phase 4, the first approved write action.
 
