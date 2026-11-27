@@ -2,6 +2,12 @@
 
 Milestones of the build, newest first. The roadmap lives in ROADMAP.md.
 
+## 2026-11-27 - Date difference tool
+
+A sixth safe tool, `date_diff`: counts the days (and weeks) between two
+YYYY-MM-DD dates. It refuses impossible dates and oversized input, and has
+offline tests for results, errors, the registry and the chat loop.
+
 ## 2026-11-26 - Unit convert tool
 
 A fifth safe tool, `unit_convert`: converts length, weight and temperature
