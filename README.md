@@ -83,6 +83,9 @@ Current tools:
   `TOOL: unit_convert 5 km to miles`. Converts length (mm, cm, m, km, inch, ft,
   mile), weight (mg, g, kg, oz, lb) and temperature (c, f, k). It uses fixed
   tables, so nothing is evaluated, and it refuses unknown units and mixed kinds.
+- `date_diff` - argument is `<date> to <date>` with dates as YYYY-MM-DD, for
+  example `TOOL: date_diff 2026-11-27 to 2026-12-25`. Replies with the number
+  of days (and weeks) between them, and refuses dates that do not exist.
 
 Try them: ask "what time is it?", "what is 128 times 46?", or
 "summarize the README file", "how many words are in this sentence?", or "convert 5 km to miles".
