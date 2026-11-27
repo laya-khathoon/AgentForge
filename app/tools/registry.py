@@ -1,6 +1,7 @@
 """Registry of tools the agent may use. Only names listed here can ever run."""
 from app.tools.calculator import calculate
 from app.tools.clock import get_current_time
+from app.tools.date_diff import date_diff
 from app.tools.file_reader import FileReadError, read_project_file
 from app.tools.unit_convert import unit_convert
 from app.tools.word_count import word_count
@@ -20,6 +21,7 @@ TOOLS = {
     "read_project_file": read_project_file,
     "word_count": word_count,
     "unit_convert": unit_convert,
+    "date_diff": date_diff,
 }
 
 
